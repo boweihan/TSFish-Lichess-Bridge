@@ -998,6 +998,7 @@ def start_lichess_bot() -> None:
     logger.info(intro(), extra={"highlighter": None})
 
     CONFIG = load_config(args.config or "./config.yml")
+    AUTH = load_config(args.config or "./auth.yml")
     logger.info("Checking engine configuration ...")
     with engine_wrapper.create_engine(CONFIG):
         pass
@@ -1005,7 +1006,7 @@ def start_lichess_bot() -> None:
 
     max_retries = CONFIG.engine.online_moves.max_retries
     check_python_version()
-    li = lichess.Lichess(CONFIG.token, CONFIG.url, __version__, logging_level, max_retries)
+    li = lichess.Lichess(AUTH.token, CONFIG.url, __version__, logging_level, max_retries)
 
     user_profile = li.get_profile()
     username = user_profile["username"]
